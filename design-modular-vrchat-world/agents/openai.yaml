@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Modular VRChat World"
+  short_description: "Plan VRChat spaces as clear functional modules"
+  default_prompt: "Use $design-modular-vrchat-world to turn this world idea into a player journey, module graph, spatial interfaces, and semantic Unity hierarchy."

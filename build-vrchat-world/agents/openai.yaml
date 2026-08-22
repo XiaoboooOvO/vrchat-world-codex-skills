@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build VRChat World"
+  short_description: "Safely implement and repair VRChat world projects"
+  default_prompt: "Use $build-vrchat-world to make this VRChat world change with live-state checks, narrow ownership, and the smallest safe Unity workflow."
