@@ -24,6 +24,10 @@ Unity/VRChat 项目的实现、诊断和修复入口。边界已明确时可直�
 - 模块边界和修改范围已清楚，任务是 Unity 局部实现、诊断或修复：直接用 build-vrchat-world。
 - 坐标、轴向或导入角度不明：用 coordinate-transform-audit；若审计后需要改 Unity，再按项目规则使用 build-vrchat-world。
 
+## 已核对的使用状态
+
+既有世界项目的 M3 交付文档明确记录了 `design-modular-vrchat-world` 和 `build-vrchat-world` 的设计与实施流程。`coordinate-transform-audit` 是新加入的技能；本轮没有定位到它已用于具体资产的调用记录。外部技能的本机历史使用情况见下方推荐文档。
+
 ## 外部开源技能推荐
 
 按任务选用游戏设计、Unity MCP 与 Blender 技能；安装技能不等于已经在项目中调用，也不等于 MCP 已连接。来源、适用范围和本地适配说明见 [外部技能与工具推荐](docs/RECOMMENDED_OPEN_SOURCE_SKILLS.md)。
