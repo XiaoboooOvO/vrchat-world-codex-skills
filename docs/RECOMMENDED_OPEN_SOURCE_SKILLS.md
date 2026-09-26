@@ -38,18 +38,6 @@
 | lod-pipeline | 制作或修订 LOD | 任务包含 LOD 时使用 |
 | collision-proxy | 制作碰撞代理或碰撞网格 | 任务包含碰撞时使用 |
 
-本机的 `unity-export` 和 `export-pipeline` 副本已增加朝向与坐标映射提示；这是本地修改，不代表上游已包含这些内容。更新时先比较差异。上游还有大量 `genre-*` 技能，主要用于 Blender 资产的类型化美术指导；它们不能代替 `game-design` 套件的玩法与关卡设计。
-
-## 本机历史使用核对
-
-以下是截至 2026-09-26 能从既有项目文档和会话记录核对的范围；这些记录不代表当前会话的工具连接状态。
-
-| 技能或工具 | 已核对状态 |
-| --- | --- |
-| game-production、level-design | 实际用于世界地图、玩家路线与空间可读性的规划讨论；没有查到同次讨论调用总入口 game-design 的证据 |
-| unity-mcp-orchestrator | 曾被明确选用并读取，用于 Unity 场景检查流程；Unity MCP 工具也有实际调用记录，但当前 Editor 连接仍须实时确认 |
-| blender-director | 实际用于 Blender 制作输入包和工作单规划；该记录不代表建模或渲染已执行 |
-| unity-export、export-pipeline | 本机副本的朝向与坐标适配已核对；本轮没有定位到可独立核对的项目调用记录 |
-| blender-modeler、asset-optimization、lod-pipeline、collision-proxy、genre-* | 已安装或列为按需候选；本轮没有定位到具体项目调用记录 |
+上游另有 `genre-*` 技能，主要用于 Blender 资产的类型化美术指导；按具体美术任务选用。它们不替代 `game-design` 套件的玩法与关卡设计。
 
 技能文件的存在不代表 Blender MCP 已连接，也不代表技能中的工具在当前会话可用。项目规则与资产合同优先于外部技能的通用建议。
