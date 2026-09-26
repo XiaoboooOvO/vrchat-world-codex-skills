@@ -1,103 +1,59 @@
 # VRChat World Codex Skills
 
-一组面向 Codex 的 VRChat Worlds 工作流 Skills：先把空间和职责设计清楚，再用有边界、可验证的方式实施到 Unity。
+面向 Codex 的三项自有技能。按任务选择；常规工作不必先经过模块设计。
 
-## 两个 Skill
+## 自有技能
 
-### `design-modular-vrchat-world`
+### design-modular-vrchat-world
 
-把自然语言中的世界想法整理成可实现的空间设计：
-
-- 玩家旅程和角色分工
-- 功能模块图及其连接类型
-- 模块局部坐标、边界、入口、出口和视线
-- 交互面、摆放面和跨模块接口
-- 语义化 Unity 层级
-- 灰盒顺序和模块交接信息
+当任务需要定义或修改空间模块、职责边界或模块接口时，用它整理玩家旅程、模块关系、局部空间约束和实现交接。模块边界已明确时，常规局部修改不需要调用它。
 
 它负责设计，不负责修改 Unity。
 
-### `build-vrchat-world`
+### build-vrchat-world
 
-把已经明确边界的设计安全地带进 Unity/VRChat 项目：
+Unity/VRChat 项目的实现、诊断和修复入口。边界已明确时可直接使用；遵循项目规则，只在请求范围内做必要检查和修改。
 
-- 根据风险选择离线文档、只读诊断、源码修改、场景补丁或明确的运行/构建模式
-- 检查当前项目规则、Git 状态、序列化所有权和 Unity 实例
-- 保护脏工作区和无关改动
-- 管理 UdonSharp ProgramAsset、场景 Apply、Undo、保存和编译检查
-- 对超时、断连、`STARTED` 和 `PENDING` 结果进行恢复判断
-- 区分静态、编译、UdonSharp、ClientSim、桌面、VR、多人和构建证据
+### coordinate-transform-audit
 
-它不会默认进入 Play Mode、运行 ClientSim、Build & Test 或上传。
+核对坐标系、轴向、角度、尺度和父级变换；适用于单个资产导入后旋转、镜像、偏移或比例异常，也适用于多坐标系换算。不要求模块化，也不授权导入素材或修改场景。
 
-## 推荐工作流
+## 如何选择
 
-```text
-需求或问题
-  -> design-modular-vrchat-world
-  -> 玩家旅程、模块边界和实现交接
-  -> build-vrchat-world
-  -> Unity 检查、有限修改、编译和针对性验证
-```
+- 需要拆分或调整模块、职责、边界或接口：先用 design-modular-vrchat-world；若还要改 Unity，再交给 build-vrchat-world。
+- 模块边界和修改范围已清楚，任务是 Unity 局部实现、诊断或修复：直接用 build-vrchat-world。
+- 坐标、轴向或导入角度不明：用 coordinate-transform-audit；若审计后需要改 Unity，再按项目规则使用 build-vrchat-world。
 
-如果只是问“这个空间应该怎么拆”，使用设计 Skill。
+## 外部开源技能推荐
 
-如果已经知道要改什么，并且问题是“如何安全地改进 Unity”，使用构建 Skill。
-
-如果是新世界或大范围重组，先设计，再实施。
+按需使用 Blender 技能，不把外部技能包当作项目依赖。来源、推荐子集和本地适配说明见 [推荐的外部开源技能](docs/RECOMMENDED_OPEN_SOURCE_SKILLS.md)。
 
 ## 安装
 
-将两个目录分别复制到 Codex 的 skills 目录：
+把需要的技能目录复制到 Codex skills 目录：
 
-```text
-<Codex skills directory>/design-modular-vrchat-world/
-<Codex skills directory>/build-vrchat-world/
-```
+- design-modular-vrchat-world/
+- build-vrchat-world/
+- coordinate-transform-audit/
 
-Windows 默认位置通常是：
-
-```text
-%USERPROFILE%\.codex\skills\
-```
-
-安装后可以显式调用：
-
-```text
-$design-modular-vrchat-world
-$build-vrchat-world
-```
+可以只安装当前工作会用到的技能。
 
 ## 使用边界
 
-- 当前项目的 `AGENTS.md`、贡献指南和其他项目规则优先于通用 Skill。
-- 设计 Skill 不授权 Unity 修改。
-- 构建 Skill 不自动推断运行、构建、上传或多人验收授权。
-- 只读检查、编译证据和运行时证据必须分开描述。
-- 本仓库不包含 Unity 项目、场景、素材或 VRChat 上传凭据。
-- `build-vrchat-world/scripts/audit_vrchat_world.py` 是只读辅助快照工具，不替代完整的 Unity、VR、多人或发布验收。
+- 目标项目的 AGENTS.md、合同和其他项目规则优先于通用技能。
+- 设计技能只负责设计；坐标技能只负责核验或换算；它们都不授权 Unity 修改。
+- build-vrchat-world 不会因为技能已安装，就扩大用户请求或推断未授权的副作用。
+- 技能只按任务需要提供检查建议；不要求每次工作列出无关的测试或验收层。
+- audit_vrchat_world.py 是只读快照工具，不能替代本次任务所需的实际依据。
 
-## 目录结构
+## 文件结构
 
-```text
-.
-├── build-vrchat-world/
-│   ├── SKILL.md
-│   ├── agents/
-│   ├── references/
-│   └── scripts/
-├── design-modular-vrchat-world/
-│   ├── SKILL.md
-│   ├── agents/
-│   ├── assets/
-│   └── references/
-└── docs/
-    └── VIDEO_INTRO_CN.md
-```
+- build-vrchat-world/：Unity/VRChat 实施与诊断
+- coordinate-transform-audit/：坐标与导入朝向审计
+- design-modular-vrchat-world/：模块与空间设计
+- docs/：技能说明及外部推荐
 
-## 当前状态
-
-这是一个可迁移的工作流包，不是完整的 VRChat 世界模板。使用时应从目标项目的实时状态、项目规则和源文件出发，不要把本仓库中的示例结构当成所有项目的固定层级。
+这是可迁移的工作流包，不是完整的 VRChat 世界模板。使用时以目标项目的实时状态和项目规则为准。
 
 ## License
 

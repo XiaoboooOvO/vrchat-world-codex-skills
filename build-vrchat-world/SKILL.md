@@ -1,31 +1,28 @@
 ---
 name: build-vrchat-world
-description: Safely inspect, implement, diagnose, and repair Unity VRChat Worlds projects with bounded source edits, serialized scene or prefab work, Unity MCP operations, UdonSharp workflows, generated content pipelines, and explicitly requested runtime or build actions.
+description: Safely implement, diagnose, and repair Unity VRChat Worlds projects with scoped source and scene workflows, generated content handling, and feature-specific references; use when Unity project work is in scope.
 ---
 
 # Build VRChat World
 
-Use this skill for execution safety. For a new world, room, zone, player journey,
-spatial layout, graybox, or semantic hierarchy, use
-`design-modular-vrchat-world` first and return here only after the module boundary
-is clear.
+Use this skill for Unity implementation, diagnosis, or repair. Use design-modular-vrchat-world only when module boundaries, ownership, or interfaces need definition or revision. When those boundaries are already clear, start here for a bounded local task. For uncertain coordinate frames or import orientation, use coordinate-transform-audit before changing Unity transforms.
 
 Choose exactly one primary mode and use the lowest-risk mode that satisfies the request:
 
 - **Offline docs/authoring** - edit project documentation or authoring data that Unity does not need to import; skip Unity, MCP, compilation, scene checks, and result artifacts.
 - **Read-only diagnose** - inspect the live project and evidence; do not write, rebuild, save, or enter Play Mode.
-- **Fast source change** - edit bounded source files, let Unity import and compile once, then check new Console errors and targeted static evidence.
+- **Fast source change** - edit bounded source files; let the normal editor refresh settle, then inspect relevant new errors and task-specific evidence.
 - **Lightweight scene patch** - invoke one explicitly authorized Apply entry point whose first step is a read-only Unity safety gate, then save once and emit one compact result.
-- **Explicit runtime/build** - run Play Mode, ClientSim, Build & Test, or upload only when the user asks for that operation.
+- **Requested runtime or release action** - perform only when the user explicitly asks for that operation.
 
 Do not automatically upgrade an offline task, fast change, or lightweight patch into a high-risk workflow.
 
 ## Interaction and review budget
 
 1. Read the project `AGENTS.md` before acting; project rules may narrow these defaults.
-2. Treat a user's scoped approval in chat as the explicit start for that task. Complete safe intermediate work, Unity compilation monitoring, and one exact authorized menu invocation without asking the user to click through each step.
-3. Do not infer authorization for Play Mode, ClientSim, scene rebuild, Build & Test, upload, or another materially different side effect.
-4. Do not load testing documents, run acceptance work, or list unrun tests unless the user reports a problem, asks for testing, or is deciding a release.
+2. Treat the user's scoped approval as authorization for the operation it names. Complete safe intermediate work within that scope without asking for repeated approval.
+3. Do not infer authorization for a materially different or externally visible operation.
+4. Read detailed acceptance guidance only when the user asks for it or a current project requirement needs it; do not list unrelated unrun layers in routine replies.
 5. For routine work, use one scoped Git summary and the smallest check needed to avoid an obviously broken change. Expand only after a failure or conflicting evidence.
 
 ## Establish live truth before editing
@@ -61,12 +58,12 @@ Do not automatically upgrade an offline task, fast change, or lightweight patch 
 - Prepare and verify required UdonSharp ProgramAssets before mutation. Do not compile or generate them halfway through an Apply.
 - Complete a zero-side-effect preflight before opening one Undo group. Modify only declared targets, roll back the entire group on failure, and save only after all targeted checks succeed.
 
-### Explicit runtime/build
+### Requested runtime or release action
 
 - Use explicit menu or automation entry points. Never start runtime or build work on editor load, script reload, or scene open.
 - Give Play Mode to one owner at a time. Do not run batch mode while the same project is open in Unity, and do not close that editor without consent.
 - Set a timeout and clean up owned Play Mode or callbacks on every terminal path. Stop after the same automation method fails twice.
-- Read [references/unity-lifecycle-and-acceptance.md](references/unity-lifecycle-and-acceptance.md) only for an explicitly requested runtime, acceptance, build, or upload task.
+- Read [references/unity-lifecycle-and-acceptance.md](references/unity-lifecycle-and-acceptance.md) only when a requested runtime or release action needs those details.
 
 ## Completion and retry rules
 
@@ -74,7 +71,7 @@ Do not automatically upgrade an offline task, fast change, or lightweight patch 
 - Never repeat a possibly mutating action while the same run may still be active. Reconnect and inspect first.
 - Bind any durable PASS to the current source or input identity, target scene, Editor session when relevant, changed targets, and stable post-save state. Do not reuse a historical PASS as current proof.
 - After the same automation method fails twice, preserve the failure evidence, report the blocker, and change the diagnosis or ownership model instead of guessing another path.
-- Report only the evidence needed for the requested task. Do not automatically list ClientSim, desktop, VR, multiplayer, build, or upload as `NOT_RUN`; mention an unexecuted layer only when the user asked about it or the claim would otherwise be misleading.
+- Report only evidence relevant to the requested task. Mention a gap only when the user asks or it limits the requested conclusion.
 
 ## World implementation guardrails
 
@@ -92,12 +89,20 @@ gameObject.AddUdonSharpComponent<MyBehaviour>();
 
 Do not substitute plain `AddComponent<T>()` for UdonSharp components. Route jump settings, checkpoints, kill triggers, respawn height, and other world-mechanics patterns to [references/vrchat-world-implementation.md](references/vrchat-world-implementation.md).
 
+## Feature-specific references
+
+Use coordinate-transform-audit before compensating for uncertain source/import axes or rotations.
+
+When a task touches a World-to-external event bridge, Udon multiplayer, synchronized mechanisms or animation, World-space UI placement, or the UdonSharp program serialization chain, read [references/vrchat-world-feature-contracts.md](references/vrchat-world-feature-contracts.md).
+
+Keep project IDs, URLs, object names, and state names in the target project's own contracts.
+
 Read [references/safe-mutation-workflow.md](references/safe-mutation-workflow.md)
 for dirty-worktree takeover, source-of-truth tracing, transactional Apply, or
 timeout/reconnect recovery. Read
 [references/generated-content-workflow.md](references/generated-content-workflow.md)
 for authoring/import/generation/Bake pipelines or generated TMP glyph atlases.
 
-For Unity MCP instance selection and unattended compilation details, read
+For Unity MCP instance selection and operation details, read
 [references/unity-mcp-workflow.md](references/unity-mcp-workflow.md) only when
 Unity MCP is actually used.

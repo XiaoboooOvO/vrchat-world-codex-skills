@@ -1,20 +1,19 @@
 ---
 name: design-modular-vrchat-world
-description: Design, decompose, organize, or restructure Unity and VRChat world spaces as human-readable functional modules. Use for a new world, room, zone, player journey, spatial layout, graybox, modular kit, semantic scene hierarchy, or an existing scene whose spatial objects and responsibilities are mixed.
+description: Define or revise functional module boundaries, ownership, and interfaces in Unity or VRChat worlds. Use when spatial decomposition is needed; skip routine local edits inside known boundaries and coordinate conversions.
 ---
 
 # Design Modular VRChat World
 
-Design the world before implementing it. Do not jump from a natural-language
-request directly to GameObjects, prefabs, or world coordinates.
+Use this skill only when a task needs module boundaries, responsibilities, or interfaces defined or revised. For local work inside known boundaries, use build-vrchat-world directly. For coordinate-frame or import-angle analysis, use coordinate-transform-audit; that skill does not require modularization.
 
-Use `build-vrchat-world` after the module boundary is clear when the user also
-wants files or Unity changed. This skill alone does not authorize Unity mutation.
+Design those boundaries before implementation; do not jump from a natural-language request directly to GameObjects or world coordinates.
+
+After the design is clear, use build-vrchat-world only when implementation is in scope. This skill alone does not authorize Unity mutation.
 
 ## Choose the output depth
 
-Use **Quick mode** for one small room, one control zone, or a local hierarchy
-cleanup. Produce only:
+Use **Quick mode** when one small module needs a concise boundary or interface design. Produce only:
 
 - purpose and users;
 - local frame and approximate bounds;
