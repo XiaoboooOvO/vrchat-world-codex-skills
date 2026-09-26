@@ -26,7 +26,7 @@ Unity/VRChat 项目的实现、诊断和修复入口。边界已明确时可直�
 
 ## 外部开源技能推荐
 
-按需使用 Blender 技能，不把外部技能包当作项目依赖。来源、推荐子集和本地适配说明见 [推荐的外部开源技能](docs/RECOMMENDED_OPEN_SOURCE_SKILLS.md)。
+按任务选用游戏设计、Unity MCP 与 Blender 技能；安装技能不等于已经在项目中调用，也不等于 MCP 已连接。来源、适用范围和本地适配说明见 [外部技能与工具推荐](docs/RECOMMENDED_OPEN_SOURCE_SKILLS.md)。
 
 ## 安装
 
