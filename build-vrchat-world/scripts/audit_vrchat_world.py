@@ -240,15 +240,14 @@ def main(argv: list[str] | None = None) -> int:
         print(f"project directory does not exist: {project}", file=sys.stderr)
         return 2
 
-    payload = json.dumps(
-        build_audit(project), ensure_ascii=False, indent=2, sort_keys=True
-    ) + "\n"
+    audit = build_audit(project)
+    payload = json.dumps(audit, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     if args.output is not None and str(args.output) != "-":
         output = args.output.expanduser().resolve()
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(payload, encoding="utf-8", newline="\n")
     sys.stdout.write(payload)
-    return 0
+    return 1 if audit["status"] == "FAIL" else 0
 
 
 if __name__ == "__main__":
